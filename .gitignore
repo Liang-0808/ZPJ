@@ -1,4 +1,4 @@
-dist/
+# dist/ is included for deployment
 output/
 .playwright-cli/
 .tmp-chrome-alidocs/
