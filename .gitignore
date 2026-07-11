@@ -1,0 +1,9 @@
+dist/
+output/
+.playwright-cli/
+.tmp-chrome-alidocs/
+.agents/
+node_modules/
+.DS_Store
+Thumbs.db
+
