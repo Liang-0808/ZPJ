@@ -14,10 +14,10 @@ node server.mjs
 http://localhost:8000
 ```
 
-## 一键生成发布文件
+## 生成发布文件
 
 ```powershell
-npm run pack:deploy
+npm.cmd run pack:deploy
 ```
 
 命令执行后会生成 `dist/` 文件夹，里面只包含线上发布需要的文件：
@@ -29,36 +29,39 @@ npm run pack:deploy
 - `script.js`
 - `assets/`
 
-## 推荐发布方式
+## 国内访问推荐方案
 
-### 方式 1：Netlify Drop，最快
+优先推荐：
 
-1. 执行 `npm run pack:deploy`
-2. 打开 [Netlify Drop](https://app.netlify.com/drop)
-3. 把 `dist/` 文件夹拖进去
-4. 等待上传完成，Netlify 会自动生成一个公开链接
+```text
+腾讯 EdgeOne Pages + Git 自动部署
+```
 
-适合先快速发给招聘方、朋友或同事查看。
+原因：
 
-### 方式 2：Vercel，适合长期维护
+- 适合静态作品集网站
+- 有免费方案
+- 可以连接 Git 仓库，后续修改后自动部署
+- 相比 Vercel、Netlify、GitHub Pages，更适合面向国内访问
 
-1. 把项目推送到 GitHub
-2. 打开 [Vercel](https://vercel.com/new)
-3. 导入 GitHub 仓库
-4. Framework Preset 选择 `Other`
-5. Build Command 留空
-6. Output Directory 填 `.`
-7. 点击 Deploy
+项目已经添加 `edgeone.json`。部署时选择导入 Git 仓库即可，平台会自动执行：
 
-项目里已经包含 `vercel.json`，Vercel 会按静态站点处理。
+```powershell
+npm run pack:deploy
+```
 
-### 方式 3：GitHub Pages，免费稳定
+更多步骤见：
 
-1. 把项目推送到 GitHub
-2. 进入仓库 `Settings -> Pages`
-3. Source 选择 `Deploy from a branch`
-4. Branch 选择 `main`，目录选择 `/root`
-5. 保存后等待部署完成
+```text
+docs/deploy-cn.md
+```
 
-项目里已经包含 `.nojekyll`，可以避免 GitHub Pages 处理静态资源时出现额外限制。
+## 后续更新流程
 
+每次修改网站后：
+
+1. 本地确认页面效果
+2. 提交并推送代码到 Git 仓库
+3. EdgeOne Pages 自动重新构建并发布
+
+如果只是临时预览，也可以执行 `npm.cmd run pack:deploy` 后，把 `dist/` 文件夹拖到 Netlify Drop。
