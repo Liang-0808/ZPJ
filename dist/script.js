@@ -83,16 +83,54 @@ function setupHeroBackground() {
   let textVisible = false;
   let loopStarted = false;
 
+  const prepareInlineVideo = (video) => {
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.controls = false;
+    video.disablePictureInPicture = true;
+    video.removeAttribute("controls");
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
+    video.setAttribute("x5-playsinline", "");
+    video.setAttribute("x5-video-player-type", "h5");
+    video.setAttribute("x5-video-player-fullscreen", "false");
+    video.setAttribute("x-webkit-airplay", "deny");
+    video.setAttribute("controlslist", "nodownload noplaybackrate noremoteplayback");
+
+    if ("disableRemotePlayback" in video) {
+      video.disableRemotePlayback = true;
+    }
+  };
+
+  prepareInlineVideo(introVideo);
+  prepareInlineVideo(loopVideo);
+
   const revealText = () => {
     if (textVisible) return;
     textVisible = true;
     heroContent.classList.add("ready");
+    heroContent.style.opacity = "1";
+    heroContent.style.visibility = "visible";
   };
 
   const startLoop = () => {
     if (!loopVideo || loopStarted) return;
     loopStarted = true;
-    introVideo?.classList.remove("active");
+    revealText();
+
+    if (introVideo) {
+      introVideo.pause();
+      introVideo.classList.remove("active");
+      setTimeout(() => {
+        if (introVideo) introVideo.currentTime = 0;
+      }, 700);
+    }
+
+    prepareInlineVideo(loopVideo);
     loopVideo.classList.add("active");
     loopVideo.currentTime = 0;
     loopVideo.play().catch(() => {});
@@ -117,6 +155,12 @@ function setupHeroBackground() {
       startLoop();
     });
   }, { once: true });
+
+  if (loopVideo) {
+    loopVideo.addEventListener("error", () => {
+      loopVideo.classList.remove("active");
+    });
+  }
 }
 
 function setupNavigation() {

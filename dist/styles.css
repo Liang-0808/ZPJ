@@ -301,10 +301,25 @@ body.scrolled .wordmark {
   z-index: 1;
   opacity: 0;
   transition: opacity 620ms ease;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .hero-video.active {
   opacity: 1;
+}
+
+.hero-video::-webkit-media-controls,
+.hero-video::-webkit-media-controls-enclosure,
+.hero-video::-webkit-media-controls-panel,
+.hero-video::-webkit-media-controls-play-button,
+.hero-video::-webkit-media-controls-timeline,
+.hero-video::-webkit-media-controls-current-time-display,
+.hero-video::-webkit-media-controls-time-remaining-display,
+.hero-video::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .hero-content {
